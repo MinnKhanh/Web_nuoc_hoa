@@ -1,0 +1,231 @@
+﻿@model IEnumerable<BTL.Models.KHACHHANG>
+
+@{
+    ViewBag.Title = "QuanLyKhachHang";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutShop.cshtml";
+}
+<style>
+    #tbchitiet{
+        padding-left:20px;
+    }
+    .inputtk {
+        display: block;
+        margin-left: 30px;
+        margin-bottom: 10px;
+        height: 150px;
+        width: 400px;
+        border: 1px solid;
+        /* border-radius: 48px; */
+        outline: none;
+        /* overflow: hidden; */
+    }
+</style>
+<div class="container">
+    <h2>Danh sách khách hàng</h2>
+
+    <table class="table">
+        <tr id="tieude">
+            <th>
+                Mã khách hàng
+            </th>
+            <th>
+                Tên khách hàng
+            </th>
+            <th>
+                Địa chỉ
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th>
+                Ngày sinh
+            </th>
+            <th>
+                Sửa Tài Khoản
+            </th>
+            <th>
+                Xóa
+            </th>
+        </tr>
+
+      
+    </table>
+
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Chỉnh Sửa</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table table-bordered" id="tbchitiet" cellspacing="2">
+                    <div>
+                        <label>Ten Khach Hang</label>
+                        <input type="text" class="inputtk" id="tensp" />
+                    </div>
+                    <div>
+                        <label>Dia Chi</label>
+                        <input type="text" class="inputtk" id="diachi" />
+                    </div>
+                    <div>
+                        <label>Dien Thoai</label>
+                        <input type="text" class="inputtk" id="dienthoai" />
+                    </div>
+                    <div>
+                        <label>Ngay Sinh</label>
+                        <input type="text" class="inputtk" id="ngaysinh" />
+                    </div>
+                    <div>
+                        <label>Ten Tai Khoan</label>
+                        <input type="text" class="inputtk" id="taikhoan" />
+                    </div>
+                    <div>
+                        <label>Mat Khau</label>
+                        <input type="text" class="inputtk" id="matkhau" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="updatebut">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var innerProductCategory = ''
+        let urlGetPhanloai = "https://localhost:44346/TaiKhoanKhachHang"
+        console.log(urlGetPhanloai)
+            $.ajax({
+                url: urlGetPhanloai,
+                method: 'GET',
+                success: function (response) {
+                    console.log("phan loai11", response.length)
+                    if (response.length == 0) {
+                        innerProductCategory = `<h3>Hóa Đơn Trống</h3>`
+                    } else {
+                        response.forEach((product) => {
+                            innerProductCategory += `<tr id="ma_${product.MaKhachHang}">
+                        <td>
+                           ${product.MaKhachHang}
+                        </td>
+                        <td id="ten_${product.MaKhachHang}">
+                           ${product.TenKhachHang}
+                        </td>
+                        <td id="diachi_${product.MaKhachHang}">
+                           ${product.DiaChi}
+                        </td>
+                        <td id="dienthoai_${product.MaKhachHang}">
+                            ${product.DienThoai}
+                        </td>
+                        <td id="ngaysinh_${product.MaKhachHang}">
+                           ${product.NgaySinh}
+                        </td>
+                        <td>
+                            <button type="button" data-id="${product.MaKhachHang}"  class="btn btn-primary butsuatk" data-toggle="modal" data-target="#exampleModal">
+                            Sửa
+                        </button>
+                        <button type="button" data-id="${product.MaKhachHang}"  class="btn btn-danger butxoa">
+                            Xóa
+                        </button>
+                        </td>
+                    </tr>`
+
+                        });
+                    }
+                    $("#tieude").after(innerProductCategory)
+             //cha
+                    $(".butxoa").click(function (e) {
+                        let makh = e.target.getAttribute("data-id");
+                        let urlGetPhanloai = "https://localhost:44346/XoaTaiKhoan?Makh=" + makh
+                        console.log(urlGetPhanloai)
+                        $.ajax({
+                            url: urlGetPhanloai,
+                            method: 'DELETE',
+                            success: function (response) {
+                                console.log("xoa", response.length)
+                                let ma = "#ma_" + makh
+                                $(ma).remove();
+                            }
+
+                        })
+                    });
+                    //cha
+                    $(".butsuatk").click(function (e) {
+                      
+                        var makh = e.target.getAttribute("data-id");
+                        console.log("chay button sua ma khach hang ngoai cung", makh)
+                        let urlGetPhanloai = "https://localhost:44346/TaiKhoanKhachHangTheoMa?Makh=" + makh
+                        $.ajax({
+                            url: urlGetPhanloai,
+                            method: 'GET',
+                            success: function (response) {
+                               // console.log("tai khoan", response)
+                                $("#tensp").val(response.TenKhachHang) 
+                                $("#diachi").val(response.DiaChi)
+                                $("#dienthoai").val(response.DienThoai)
+                                $("#ngaysinh").val( response.NgaySinh)
+                                $("#taikhoan").val(response.TenTaiKhoan)
+                                $("#matkhau").val(response.MatKhau)
+                                $('#updatebut').unbind('click')
+                                $("#updatebut").click(function () {
+
+                                    if ($("#tensp").val().trim().length == 0) {
+                                        alert("Không được để trống tên sản phẩm")
+                                    }
+                                    else {
+                                    console.log("ma khach hang",makh)
+                                     var taikhoan = {}
+                                    taikhoan.MaKhachHang = makh;
+                                    taikhoan.TenKhachHang = $("#tensp").val();
+                                    taikhoan.DiaChi = $("#diachi").val();
+                                    taikhoan.DienThoai = $("#dienthoai").val();
+                                    taikhoan.NgaySinh = $("#ngaysinh").val();
+                                    taikhoan.TenTaiKhoan = $("#taikhoan").val();
+                                    taikhoan.MatKhau = $("#matkhau").val();
+                                    let urlsuatk = "https://localhost:44346/SuaTaiKhoan"
+                                  //  console.log(taikhoan)
+                                    $.ajax({
+                                        url: urlsuatk,
+                                        method: 'PUT',
+                                        data: JSON.stringify(taikhoan),
+                                        dataType: "json",
+                                        contentType:"application/json",
+                                        success: function (data) {
+                                         
+                                            let ten = "#ten_" + data.MaKhachHang
+                                            let dc = "#diachi_" + data.MaKhachHang
+                                            let dt = "#dienthoai_" + data.MaKhachHang
+                                            let ns = "#ngaysinh_" + data.MaKhachHang
+                                            $(ten).text(data.TenKhachHang)
+                                            $(dc).text(data.DiaChi)
+                                            $(dt).text(data.DienThoai)
+                                            $(ns).text(data.NgaySinh)
+                                            console.log(data)
+                                        }
+
+                                        })
+                                    }
+                                    //cha
+                                })
+                                //cha
+                            }
+
+                        })
+                    });
+
+                    //cha
+                },
+                error: function (response) {
+                }
+
+            });
+       })
+
+</script>
+

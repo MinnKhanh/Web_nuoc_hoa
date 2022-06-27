@@ -1,0 +1,161 @@
+﻿@model IEnumerable<BTL.Models.CT_HOADONBAN>
+
+@{
+    ViewBag.Title = "QuanLyHoaDon";
+    Layout = "~/Areas/User/Views/Shared/_LayoutShop.cshtml";
+}
+
+<div class="container">
+    <h2>Hóa đơn mua hàng của bạn</h2>
+
+    <table class="table">
+        <tr id="tieude">
+            <th>
+                Mã Hóa Đơn
+            </th>
+            <th>
+                Tổng Tiền
+            </th>
+            <th>
+                Ngày Bán
+            </th>
+            <th>
+                Số Lượng
+            </th>
+            <th></th>
+        </tr>
+
+        @*@foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @item.SoLuongBan
+                    </td>
+                    <td>
+                        @item.DonGiaBan
+                    </td>
+                    <td>
+                        @item.ThanhTienBan
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SANPHAM.TenSP)
+                    </td>
+                </tr>
+            }*@
+    </table>
+
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chi Tiết</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered"   id="tbchitiet" cellspacing="2" >
+                   
+                    </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var innerProductCategory = ''
+        let urlGetPhanloai = "https://localhost:44346/HoaDon?makhachhang=@Session["MaKhachHang"]"
+        console.log(urlGetPhanloai)
+            $.ajax({
+                url: urlGetPhanloai,
+                method: 'GET',
+                success: function (response) {
+                    console.log("phan loai11", response.length)
+                    if (response.length == 0) {
+                        innerProductCategory = `<h3>Hóa Đơn Trống</h3>`
+                    } else {
+                        response.forEach((product) => {
+                            innerProductCategory += ` <tr>
+                    <td>
+                       ${product.MaHoaDonBan}
+                    </td>
+                    <td>
+                       ${product.TongTienBan}
+                    </td>
+                    <td>
+                        ${product.NgayBan}
+                    </td>
+                    <td>
+                        ${product.soluong}
+                    </td>
+                    <td>
+                        <button type="button" data-id="${product.MaHoaDonBan}"  class="btn btn-primary butchitiet" data-toggle="modal" data-target="#exampleModal">
+                            Chi Tiết
+                        </button>
+                    </td>
+
+                </tr>`
+
+                        });
+                    }
+                    $("#tieude").after(innerProductCategory)
+                    //cha
+                    $(".butchitiet").click(function (e) {
+                        let mahd = e.target.getAttribute("data-id");
+                        var innerProductCategory = `<tr id="tieudect">
+                                         <th>
+                                            Tên Sản Phẩm
+                                        </th>
+                                        <th>
+                                                Số Lượng
+                                        </th>
+                                        <th>
+                                                Giá Bán
+                                        </th>
+                                        <th>
+                                                Thành Tiền
+                                        </th>
+                                        </tr>`
+                        let urlGetPhanloai = "https://localhost:44346/ChiTietHoaDonBan?mahoadon=" + mahd
+                        console.log(urlGetPhanloai)
+                        $.ajax({
+                            url: urlGetPhanloai,
+                            method: 'GET',
+                            success: function (response) {
+                                console.log("chitietdh", response.length)
+                                response.forEach((product) => {
+                                    innerProductCategory += ` <tr>
+                    <td>
+                       ${product.TenSP}
+                    </td>
+                    <td>
+                       ${product.SoLuongBan}
+                    </td>
+                    <td>
+                        ${product.DonGiaBan}
+                    </td>
+                    <td>
+                        ${product.ThanhTienBan}
+                    </td>
+
+                </tr>`
+
+                                });
+                                document.getElementById("tbchitiet").innerHTML = innerProductCategory;
+                            }
+                   
+                        })
+                        });
+                    //cha
+                  
+                },
+                error: function (response) {
+                }
+
+            });
+       })
+
+</script>

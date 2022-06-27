@@ -1,0 +1,172 @@
+﻿@model BTL.Models.KHACHHANG
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Stylish Register Form Responsive Widget Template :: w3layouts</title>
+    <!-- Meta tag Keywords -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="Stylish Register Form Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <!-- Meta tag Keywords -->
+    <!-- css files -->
+    <link rel="stylesheet" href="/Resource/DangKy/css/style.css" type="text/css" media="all" />
+    <!-- Style-CSS -->
+    <link rel="stylesheet" href="/Resource/DangKy/css/font-awesome.css">
+    <!-- Font-Awesome-Icons-CSS -->
+    <!-- //css files -->
+    <!-- web-fonts -->
+    <link href="//fonts.googleapis.com/css?family=Niconne&amp;subset=latin-ext" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <!-- //web-fonts -->
+</head>
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <!--Đây là giao diện form đăng ký gán template-->
+
+
+    <h1>
+        <span>Đ</span>ăng
+        <span>K</span>ý
+    </h1>
+
+    <!-- //header -->
+    <!-- content -->
+
+
+    <div class="main-content-agile">
+        <div class="sub-main-w3">
+            <form action="#" method="post">
+                <div class="form-style-agile">
+                    <label>Họ và tên</label>
+                    <div class="pom-agile">
+                        <span aria-hidden="true"><img src="/Resource/DangKy/images/user.png" , width="20px" , height="20px" /></span>
+                        @*<input placeholder="Your Name" name="Name" type="text" required="">*@
+                        @Html.EditorFor(model => model.TenKhachHang, new { htmlAttributes = new { @placeholder = "Your name", @name = "Name", @type = "text",@class = "textcheck", @required = "" } })
+                    </div>
+                </div>
+
+                <div class="form-style-agile">
+                    <label>Địa chỉ</label>
+                    <div class="pom-agile">
+                        <span aria-hidden="true"><img src="/Resource/DangKy/images/address.png" , width="20px" , height="20px" /></span>
+                        @*<input placeholder="Email" name="Email" type="email" required="">*@
+                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @placeholder = "Your address", @name = "Address", @type = "text", @class = "textcheck", @required = "" } })
+                    </div>
+                </div>
+
+                <div class="form-style-agile">
+                    <label>Số điện thoại</label>
+                    <div class="pom-agile">
+                        <span aria-hidden="true"><img src="/Resource/DangKy/images/phone.png" , width="20px" , height="20px" /></span>
+                        @*<input placeholder="Email" name="Email" type="email" required="">*@
+                        @Html.EditorFor(model => model.DienThoai, new { htmlAttributes = new { @placeholder = "Phone number", @name = "PhoneNumber", @type = "text", @class = "textcheck", @required = "" } })
+                    </div>
+                </div>
+
+                <div class="form-style-agile">
+                    <label>Ngày sinh</label>
+                    <div class="pom-agile">
+                        <span aria-hidden="true"><img src="/Resource/DangKy/images/date.png" , width="20px" , height="20px" /></span>
+                        @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @placeholder = "Date of birth", @name = "DateOfBirth", @type = "date", @class = "textcheck", @required = "" } })
+                    </div>
+                </div>
+
+
+                <div class="form-style-agile">
+                    <label>Tên tài khoản</label>
+                    <div class="pom-agile">
+                        <span aria-hidden="true"><img src="/Resource/DangKy/images/add.png" , width="20px" , height="20px" /></span>
+                        @*<input placeholder="Email" name="Email" type="datetime" required="">*@
+                        @Html.EditorFor(model => model.TenTaiKhoan, new { htmlAttributes = new { @placeholder = "User name", @name = "UserName", @type = "text", @class = "textcheck", @required = "" } })
+                    </div>
+                </div>
+
+                <div class="form-style-agile">
+                    <label>Mật khẩu</label>
+                    <div class="pom-agile">
+                        <span aria-hidden="true"><img src="/Resource/DangKy/images/key.png" , width="20px" , height="20px" /></span>
+                        @*<input placeholder="Password" name="Password" type="password" id="password1" required="">*@
+                        @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @placeholder = "Password", @name = "Password", @type = "password", @class = "textcheck", @id = "password1", @required = "" } })
+                    </div>
+                </div>
+                <div class="form-style-agile">
+                    <label>Xác nhận mật khẩu</label>
+                    <div class="pom-agile">
+                        <span aria-hidden="true"><img src="/Resource/DangKy/images/key.png" , width="20px" , height="20px" /></span>
+                        <input placeholder="Confirm Password" type="password" id="password2" class = "textcheck" required="">
+                        @*@Html.EditorFor(model => model.XNMatKhau, new { htmlAttributes = new { @placeholder = "Confirm Password", @name = "ConfirmPassword", @type = "password", @id = "password2", @required = "" } })*@
+                    </div>
+                </div>
+
+                <input type="submit" value="Đăng ký">
+
+                <div class="form-style-agile">
+                    <label>@ViewBag.ThanhCong</label>
+                </div>
+
+                <div class="form-style-agile">
+                    <label>@ViewBag.TrungTaiKhoan</label>
+                </div>
+            </form>
+        </div>
+        <div class="img-w3layouts">
+            <img src="../../../Admin/Views/TaiKhoanAdmin/images/1.png" alt="">
+
+        </div>
+    </div>
+
+
+
+    <!-- //content -->
+    <!-- footer -->
+    <div class="footer">
+        <h2>
+            &copy; Sự hài lòng của bạn là mục tiêu của chúng tôi | Design by Web_N02
+        </h2>
+    </div>
+    <!-- //foote r-->
+    <!-- password-script -->
+    <script>
+        window.onload = function () {
+            document.getElementById("password1").onchange = validatePassword;
+            document.getElementById("password2").onchange = validatePassword;
+        }
+        function checkempty() {
+
+        }
+        function validatePassword() {
+            var pass2 = document.getElementById("password2").value;
+            var pass1 = document.getElementById("password1").value;
+            if (pass1 != pass2)
+                document.getElementById("password2").setCustomValidity("Mật khẩu không đồng nhất");
+            else
+                document.getElementById("password2").setCustomValidity('');
+            //empty string means no validation error
+        }
+        $(".textcheck").change(function (e) {
+            let val = e.target.value
+            if (val.length == 0) {
+                e.target..setCustomValidity("Khong duoc de trong");
+            }
+        })
+    </script>
+
+    <div>
+        @Html.ActionLink("Về trang đăng nhập", "DangNhap", "TaiKhoanUser")
+    </div>
+</body>
+</html>

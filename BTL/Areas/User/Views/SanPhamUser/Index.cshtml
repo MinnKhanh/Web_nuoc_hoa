@@ -1,0 +1,94 @@
+﻿@using BTL.Models
+@using Web_BTL.Areas.User.Controllers
+@using Web_BTL.Areas.User.Models
+@using PagedList.Mvc;
+@model PagedList.IPagedList<SANPHAM>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/User/Views/Shared/_LayoutShop.cshtml";
+}
+
+
+<div class="container" id="lisanpham">
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        var innerProductCategory = ''
+        let urlGetPhanloai = "https://localhost:44346/SanPhambyCategory"
+            //   console.log(urlGetspPhanloai)
+            $.ajax({
+                url: urlGetPhanloai,
+                method: 'GET',
+                success: function (response) {
+                    console.log("phan loai11", response.length)
+                    if (response.length == 0) {
+                        innerProductCategory = `<h3>không có sản phẩm</h3>`
+                    } else {
+                        response.forEach((product) => {
+                            let anh = "~/Resource/SanPham/" + product.AnhSanPham
+                            innerProductCategory += `<div class="col-md-4 itemsp">
+                <div class="product-item">
+                    <div class="product-thumb">
+                        <span class="bage">${product.SoLuong == 0 ? "hết hàng" : product.SoLuong}</span>
+                        <img class="img-responsive" src="../../Resource/SanPham/${product.AnhSanPham}" alt="product-img" style="width: 100%;height: 350px"/>
+                        <div class="preview-meta">
+                            <ul>
+                                <a href="/User/SanPhamUser/ChiTietSanPham?MaSp=${product.MaSP}">
+                                    <li>
+                                        <span data-toggle="modal" data-target="">
+                                            <i class="tf-ion-ios-search-strong"></i>
+                                        </span>
+                                    </li></a>
+
+                                <li>
+                                    <a href="#" data-Masp="${product.MaSP}" id="sp${product.MaSP}" class="addproductGiohang"><i class="tf-ion-android-cart"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h4>Nước hoa: ${product.TenSP}</h4>
+                        <p>Dung tích: ${product.DungTich} ml</p>
+                        <p class="price">Giá: ${product.DonGia} VNĐ</p>
+                        <p>Về sản phẩm: ${product.MoTaSanPham}</p>
+                    </div>
+                </div>
+            </div>`
+
+                        });
+                    }
+                    $('#lisanpham').unbind('click')
+                    document.getElementById("lisanpham").innerHTML = innerProductCategory;
+                    $(".addproductGiohang").click(function (e) {
+                        e.preventDefault();
+                    })
+                    $("#lisanpham").click(function (e) {
+                        console.log("chay")
+                        let masp = e.target.getAttribute("data-Masp");
+                        if (masp) {
+
+                            console.log("Ma sp", masp)
+                            console.log("/User/GioHang/ThemGioHang?sMaSp=" + masp)
+                            $.ajax({
+                                url: "/User/GioHang/ThemGioHang?sMaSp=" + masp,
+                                method: 'GET',
+                                success: function (response) {
+                                    console.log($("#soluongaddgiohang"))
+                                    document.getElementById("soluongaddgiohang").innerHTML = response
+                                },
+                                error: function (response) {
+                                }
+                            });
+                        }
+                    })
+                },
+                error: function (response) {
+                }
+
+            });
+        })
+    
+</script>

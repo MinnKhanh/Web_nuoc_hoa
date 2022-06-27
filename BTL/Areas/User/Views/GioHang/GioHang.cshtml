@@ -1,0 +1,93 @@
+﻿@using Web_BTL.Areas.User.Models
+@model List<GioHang>
+@{
+    ViewBag.Title = "GioHang";
+    Layout = "~/Areas/User/Views/Shared/_LayoutShop.cshtml";
+}
+
+<h2 style="text-align: center">Thông tin giỏ hàng</h2>
+
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Mã sản phẩm</td>
+            <td>Tên sản phẩm</td>
+            <td>Ảnh</td>
+            <td>Số lượng</td>
+            <td>Đơn giá (VNĐ)</td>
+            <td>Thành tiền (VNĐ)</td>
+        </tr>
+        </thead>
+        <tbody id="listcart">
+        @*@foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.sMaSP</td>
+                <td>@item.sTenSP</td>
+                <td><img src="@Url.Content("~/Resource/SanPham/"+ @item.sAnhSP)" width="100px" height="100px" /> </td>
+                <td>@item.iSoLuong</td>
+                <td>@item.dGia</td>
+                <td>@item.dThanhTien</td>
+            </tr>
+        }*@
+        </tbody>
+        <tfoot>
+        <tr>
+            <td></td>
+            <td>Tổng cộng</td>
+            <td></td>
+            <td>@ViewBag.TongSoLuong</td>
+            <td></td>
+            <td>@ViewBag.TongTien</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td colspan="6" style="text-align:right">
+                @using (Html.BeginForm("DatHang", "GioHang"))
+                {
+                    <input type="submit" value="Đặt hàng" />
+                }
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        var innerProductCategory = ''
+        let urlGetspPhanloai = "https://localhost:44346/User/GioHang/SuaGioHang"
+        $.ajax({
+            url: urlGetspPhanloai,
+            method: 'GET',
+            success: function (response) {
+                console.log("gio hang", response)
+                console.log("chay lai")
+            //    response.forEach((product) => {
+            //        let anh = "~/Resource/SanPham/" + product.AnhSanPham
+            //        innerProductCategory += `<tr>
+            //    <td>${product.sMaSP}</td>
+            //    <td>${product.sTenSP}</td>
+            //    <td><img src="../../Resource/SanPham/${product.sAnhSP}" width="100px" height="100px" /> </td>
+            //    <td>${product.iSoLuong}</td>
+            //    <td>${product.dGia}</td>
+            //    <td>${product.dThanhTien}</td>
+            //</tr>`
+
+                });
+                document.getElementById("listcart").innerHTML = innerProductCategory;
+
+
+            },
+            error: function (response) {
+            }
+        });
+
+    });
+</script>
+
+

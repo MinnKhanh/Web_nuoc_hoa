@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CSDL_QuanLyCuaHangBanNuocHoaModelStoreContainer" CdmEntityContainer="CSDL_QuanLyCuaHangBanNuocHoa">
+    <EntitySetMapping Name="CT_HOADONBAN">
+      <EntityTypeMapping TypeName="CSDL_QuanLyCuaHangBanNuocHoaModel.CT_HOADONBAN">
+        <MappingFragment StoreEntitySet="CT_HOADONBAN">
+          <ScalarProperty Name="MaChiTiet" ColumnName="MaChiTiet" />
+          <ScalarProperty Name="MaHoaDonBan" ColumnName="MaHoaDonBan" />
+          <ScalarProperty Name="MaSP" ColumnName="MaSP" />
+          <ScalarProperty Name="SoLuongBan" ColumnName="SoLuongBan" />
+          <ScalarProperty Name="DonGiaBan" ColumnName="DonGiaBan" />
+          <ScalarProperty Name="GiamGia" ColumnName="GiamGia" />
+          <ScalarProperty Name="ThanhTienBan" ColumnName="ThanhTienBan" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HOADONBANs">
+      <EntityTypeMapping TypeName="CSDL_QuanLyCuaHangBanNuocHoaModel.HOADONBAN">
+        <MappingFragment StoreEntitySet="HOADONBAN">
+          <ScalarProperty Name="MaHoaDonBan" ColumnName="MaHoaDonBan" />
+          <ScalarProperty Name="NgayBan" ColumnName="NgayBan" />
+          <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+          <ScalarProperty Name="TongTienBan" ColumnName="TongTienBan" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KHACHHANGs">
+      <EntityTypeMapping TypeName="CSDL_QuanLyCuaHangBanNuocHoaModel.KHACHHANG">
+        <MappingFragment StoreEntitySet="KHACHHANG">
+          <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+          <ScalarProperty Name="TenKhachHang" ColumnName="TenKhachHang" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+          <ScalarProperty Name="DienThoai" ColumnName="DienThoai" />
+          <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+          <ScalarProperty Name="TenTaiKhoan" ColumnName="TenTaiKhoan" />
+          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOAIs">
+      <EntityTypeMapping TypeName="CSDL_QuanLyCuaHangBanNuocHoaModel.LOAI">
+        <MappingFragment StoreEntitySet="LOAI">
+          <ScalarProperty Name="MaLoai" ColumnName="MaLoai" />
+          <ScalarProperty Name="TenLoai" ColumnName="TenLoai" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NHANHIEUx">
+      <EntityTypeMapping TypeName="CSDL_QuanLyCuaHangBanNuocHoaModel.NHANHIEU">
+        <MappingFragment StoreEntitySet="NHANHIEU">
+          <ScalarProperty Name="MaNhanHieu" ColumnName="MaNhanHieu" />
+          <ScalarProperty Name="TenNhanHieu" ColumnName="TenNhanHieu" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="XuatXu" ColumnName="XuatXu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SANPHAMs">
+      <EntityTypeMapping TypeName="CSDL_QuanLyCuaHangBanNuocHoaModel.SANPHAM">
+        <MappingFragment StoreEntitySet="SANPHAM">
+          <ScalarProperty Name="MaSP" ColumnName="MaSP" />
+          <ScalarProperty Name="TenSP" ColumnName="TenSP" />
+          <ScalarProperty Name="DonGia" ColumnName="DonGia" />
+          <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+          <ScalarProperty Name="NongDo" ColumnName="NongDo" />
+          <ScalarProperty Name="NhomHuong" ColumnName="NhomHuong" />
+          <ScalarProperty Name="MoTaSanPham" ColumnName="MoTaSanPham" />
+          <ScalarProperty Name="NamPhatHanhSanPham" ColumnName="NamPhatHanhSanPham" />
+          <ScalarProperty Name="AnhSanPham" ColumnName="AnhSanPham" />
+          <ScalarProperty Name="MaNhanHieu" ColumnName="MaNhanHieu" />
+          <ScalarProperty Name="MaLoai" ColumnName="MaLoai" />
+          <ScalarProperty Name="DungTich" ColumnName="DungTich" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="getHoadon" FunctionName="CSDL_QuanLyCuaHangBanNuocHoaModel.Store.getHoadon">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CSDL_QuanLyCuaHangBanNuocHoaModel.getHoadon_Result">
+          <ScalarProperty Name="MaHoaDonBan" ColumnName="MaHoaDonBan" />
+          <ScalarProperty Name="TongTienBan" ColumnName="TongTienBan" />
+          <ScalarProperty Name="NgayBan" ColumnName="NgayBan" />
+          <ScalarProperty Name="soluong" ColumnName="soluong" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="getCTHoadon" FunctionName="CSDL_QuanLyCuaHangBanNuocHoaModel.Store.getCTHoadon">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CSDL_QuanLyCuaHangBanNuocHoaModel.getCTHoadon_Result">
+          <ScalarProperty Name="TenSP" ColumnName="TenSP" />
+          <ScalarProperty Name="SoLuongBan" ColumnName="SoLuongBan" />
+          <ScalarProperty Name="DonGiaBan" ColumnName="DonGiaBan" />
+          <ScalarProperty Name="ThanhTienBan" ColumnName="ThanhTienBan" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="getHoadonAdmin" FunctionName="CSDL_QuanLyCuaHangBanNuocHoaModel.Store.getHoadonAdmin">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CSDL_QuanLyCuaHangBanNuocHoaModel.getHoadonAdmin_Result">
+          <ScalarProperty Name="MaHoaDonBan" ColumnName="MaHoaDonBan" />
+          <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+          <ScalarProperty Name="TenKhachHang" ColumnName="TenKhachHang" />
+          <ScalarProperty Name="soluong" ColumnName="soluong" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+          <ScalarProperty Name="NgayBan" ColumnName="NgayBan" />
+          <ScalarProperty Name="TongTienBan" ColumnName="TongTienBan" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="removehoadon" FunctionName="CSDL_QuanLyCuaHangBanNuocHoaModel.Store.removehoadon" />
+    <FunctionImportMapping FunctionImportName="removetaikhoan" FunctionName="CSDL_QuanLyCuaHangBanNuocHoaModel.Store.removetaikhoan" />
+    <FunctionImportMapping FunctionImportName="updatetaikhoan" FunctionName="CSDL_QuanLyCuaHangBanNuocHoaModel.Store.updatetaikhoan" />
+    <FunctionImportMapping FunctionImportName="deletetaikhoan" FunctionName="CSDL_QuanLyCuaHangBanNuocHoaModel.Store.deletetaikhoan" />
+    <FunctionImportMapping FunctionImportName="xoakhachhang" FunctionName="CSDL_QuanLyCuaHangBanNuocHoaModel.Store.xoakhachhang" />
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,59 @@
+﻿@using BTL.Models;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<SANPHAM>
+@{
+    ViewBag.Title = "Kết quả tìm kiếm";
+    Layout = "~/Areas/User/Views/Shared/_LayoutShop.cshtml";
+}
+
+<div class="container">
+    <h2>@ViewBag.ThongBao</h2>
+    @{
+        int j = 0;
+        foreach (var VARIABLE in Model)
+        {
+            j++;
+            <div class="col-md-4">
+                <div class="product-item">
+                    <div class="product-thumb">
+                        <span class="bage">@VARIABLE.MaLoai</span>
+                        <img class="img-responsive" src="@Url.Content("~/Resource/SanPham/" + @VARIABLE.AnhSanPham)" alt="product-img" style="width: 100%;height: 350px"/>
+                        <div class="preview-meta">
+                            <ul>
+                                <a href="@Url.Action("ChiTietSanPham", "SanPhamUser", new {@MaSP = VARIABLE.MaSP})">
+                                <li>
+                                    <span data-toggle="modal" data-target="#product-modal">
+                                        <i class="tf-ion-ios-search-strong"></i>
+                                    </span>
+                                </li></a>
+
+                                <li>
+                                    <a href="@Url.Action("ThemGioHang", "GioHang", new {@sMaSP = @VARIABLE.MaSP, @strUrl = Request.Url.ToString()})"><i class="tf-ion-android-cart"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h4>Nước hoa: @VARIABLE.TenSP</h4>
+                        <p>Dung tích: @VARIABLE.DungTich ml</p>
+                        <p class="price">Giá: @VARIABLE.DonGia VNĐ</p>
+                        <p>Về sản phẩm: @VARIABLE.MoTaSanPham</p>
+                    </div>
+                </div>
+            </div>
+
+            if (j % 3 == 0)
+            {
+                <div style="clear: both"></div>
+            }
+        }
+    }
+</div>
+
+<hr/>
+
+<div class="footer" style="text-align: center">
+    <ul class="pagination">
+        @Html.PagedListPager(Model, page => Url.Action("Searching", new { page = page, @searchkey = ViewBag.keyword }))
+    </ul>
+</div>

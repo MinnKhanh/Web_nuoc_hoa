@@ -1,0 +1,115 @@
+﻿@model BTL.Models.SANPHAM
+
+@{
+    ViewBag.Title = "XoaSanPham";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutShop.cshtml";
+}
+
+<div class="container">
+    <h2>Xóa sản phẩm</h2>
+
+    <h3>Bạn có muốn xóa sản phẩm này không?</h3>
+    <div>
+        <h4>Thông tin sản phẩm xóa</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Tên sản phẩm
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TenSP)
+            </dd>
+
+            <dt>
+                Đơn giá
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DonGia)
+            </dd>
+
+            <dt>
+                Số lượng
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SoLuong)
+            </dd>
+
+            <dt>
+                Nồng độ
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NongDo)
+            </dd>
+
+            <dt>
+                Nhóm hương
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NhomHuong)
+            </dd>
+
+            <dt>
+                Mô tả sản phẩm
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MoTaSanPham)
+            </dd>
+
+            <dt>
+                Năm phát hành
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NamPhatHanhSanPham)
+            </dd>
+
+            <dt>
+                Ảnh sản phẩm
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AnhSanPham)
+            </dd>
+
+            <dt>
+                Dung tích
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DungTich)
+            </dd>
+
+            <dt>
+                Loại nước hoa
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LOAI.TenLoai)
+            </dd>
+
+            <dt>
+                Thương hiệu
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NHANHIEU.TenNhanHieu)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Xóa sản phẩm" class="btn btn-default" /> |
+            </div>
+        }
+    </div>
+
+</div>

@@ -1,0 +1,185 @@
+﻿@model Web_BTL.Areas.Admin.Models.SanPhamViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutShop.cshtml";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/Actor.js"></script>
+
+<!--Hiển thị sản phẩm-->
+
+<br />
+<!-- Modal Add-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm sản phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--Fomr điền thông tin-->
+                <form>
+                    <div class="form-group">
+                        <label for="Name">Tên sản phẩm</label>
+                        <input type="text" class="form-control" id="TenSP" aria-describedby="emailHelp" placeholder="Nhập tên nước hoa">
+                    </div>
+                    <div class="form-group">
+                        <label for="Age">Giá bán</label>
+                        <input type="number" class="form-control" id="GiaBan" placeholder="Nhập giá bán">
+                    </div>
+                    <div class="form-group">
+                        <label for="Age">Số lượng</label>
+                        <input type="number" class="form-control" id="SoLuong" placeholder="Nhập số lượng">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Nồng độ</label>
+                        <input type="text" class="form-control" id="NongDo" aria-describedby="emailHelp" placeholder="Nhập nồng độ">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Nhóm hương</label>
+                        <input type="text" class="form-control" id="NhomHuong" aria-describedby="emailHelp" placeholder="Nhập nhóm hương">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Mô tả nước hoa</label>
+                        <input type="text" class="form-control" id="MoTaSanPham" aria-describedby="emailHelp" placeholder="Mô tả cho nước hoa">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Năm phát hành</label>
+                        <input type="number" class="form-control" id="NamPhatHanh" aria-describedby="emailHelp" placeholder="Năm phát hành">
+                    </div>
+                    <div class="form-group">
+                        <label for="Image">Tên ảnh</label>
+                        <input type="file" class="form-control" id="AnhSanPham" aria-describedby="emailHelp" placeholder="Ảnh sản phẩm">
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownListFor(m => m.MaNhanHieu, ViewBag.ListOfDepartment1 as SelectList, "Thương hiệu", new { @id = "DropDwn1", @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownListFor(m => m.MaLoai, ViewBag.ListOfDepartment as SelectList, "Loại", new { @id = "DropDwn", @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Dung tích</label>
+                        <input type="number" class="form-control" id="DungTich" aria-describedby="emailHelp" placeholder="Dung tích">
+                    </div>
+                </form>
+                <!--Kết thúc form điền thông tin-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="btnPrint" type="button" class="btn btn-primary" onclick="SaveActor()">Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Modal-->
+
+<!--Modal Update-->
+<div class="modal fade" id="ModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cập nhật sản phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--Fomr điền thông tin-->
+                <form>
+                    <div class="form-group">
+                        <label for="Name">Tên sản phẩm</label>
+                        <input type="text" class="form-control" id="TenSP_Update" aria-describedby="emailHelp" placeholder="Nhập tên nước hoa">
+                    </div>
+                    <div class="form-group">
+                        <label for="Age">Giá bán</label>
+                        <input type="number" class="form-control" id="GiaBan_Update" placeholder="Nhập giá bán">
+                    </div>
+                    <div class="form-group">
+                        <label for="Age">Số lượng</label>
+                        <input type="number" class="form-control" id="SoLuong_Update" placeholder="Nhập số lượng">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Nồng độ</label>
+                        <input type="text" class="form-control" id="NongDo_Update" aria-describedby="emailHelp" placeholder="Nhập nồng độ">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Nhóm hương</label>
+                        <input type="text" class="form-control" id="NhomHuong_Update" aria-describedby="emailHelp" placeholder="Nhập nhóm hương">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Mô tả nước hoa</label>
+                        <input type="text" class="form-control" id="MoTaSanPham_Update" aria-describedby="emailHelp" placeholder="Mô tả cho nước hoa">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Năm phát hành</label>
+                        <input type="number" class="form-control" id="NamPhatHanh_Update" aria-describedby="emailHelp" placeholder="Năm phát hành">
+                    </div>
+                    <div class="form-group">
+                        <label for="Image">Tên ảnh</label>
+                        <input type="file" class="form-control" id="AnhSanPham_Update" aria-describedby="emailHelp" placeholder="Ảnh sản phẩm">
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownListFor(m => m.MaNhanHieu, ViewBag.ListOfDepartment1 as SelectList, "Thương hiệu", new { @id = "DropDwn1_Update", @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownListFor(m => m.MaLoai, ViewBag.ListOfDepartment as SelectList, "Loại", new { @id = "DropDwn_Update", @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Dung tích</label>
+                        <input type="number" class="form-control" id="DungTich_Update" aria-describedby="emailHelp" placeholder="Dung tích">
+                    </div>
+                </form>
+                <!--Kết thúc form điền thông tin-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="btn_update" type="button" class="btn btn-primary" onclick="UpdateActor()">Lưu lại</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Modal Update-->
+
+<div class="container">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Thêm sản phẩm
+    </button>
+    <br/>
+    <div class="row">
+        @*<div class="input-group">
+            <label for="searchBox">Search</label>
+            <input type="search" id="searchBox" placeholder="Filtrar...">
+        </div>*@
+    </div>
+    <table class="table table-bordered table-striped table-responsive myTable">
+        <thead>
+        <tr>
+            <th>Tên nước hoa</th>
+            <th>Giá bán (vnđ)</th>
+            <th>Mô tả</th>
+            <th>Dung tích(ml)</th>
+            <th>Ảnh</th>
+            <th>Xóa</th>
+            <th>Sửa</th>
+        </tr>
+        </thead>
+        <tbody id="AllActor">
+        </tbody>
+    </table>
+</div>
+<!--Kết thúc phần hiển thị-->
+<!--Script-->
+<!--End Script-->

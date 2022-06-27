@@ -1,0 +1,252 @@
+﻿@model IEnumerable<BTL.Models.NHANHIEU>
+@using BTL.Models
+@{
+    ViewBag.Title = "QuanLyNhanHieu";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutShop.cshtml";
+}
+
+<div class="container">
+    <h2>Danh sách nhãn hiệu</h2>
+    <p>
+        <button id="btnThem" class="btn btn-xs btn-infor"><i class="fa fa-pencil-sqare-o">Thêm</i></button>
+    </p>
+    <table id="table">
+        <tr>
+            @*<th>
+                    Mã nhãn hiệu
+                </th>*@
+            <th class="col-sm-4 ">
+                Tên nhãn hiệu
+            </th>
+            <th class="col-sm-5">
+                Email
+            </th>
+            <th class="col-sm-1">
+                Xuất xứ
+            </th>
+            <th class="col-sm-2 ">
+                Action
+            </th>
+        </tr>
+
+        @*@foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaNhanHieu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenNhanHieu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.XuatXu)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("ChinhSuaNhanHieu","NhanHieu", new { @MaNhanHieu = item.MaNhanHieu })">Chỉnh Sửa</a> |
+                        <a href="@Url.Action("XoaNhanHieu","NhanHieu", new { @MaNhanHieu = item.MaNhanHieu })">Xoá</a>
+
+                    </td>
+                </tr>
+
+            }*@
+
+    </table>
+
+</div>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="modalBrand">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div class="panel-heading" id="modal-title"></div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>Tên nhãn</label>
+                        <input type="text" class="form-control" id="mdtennhan" placeholder="ten nhan" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" id="md-email" placeholder="Email" required="Nhập đúng email"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Xuất Xứ</label>
+                        <input type="text" class="form-control" id="md-xuatxu" placeholder="Xuất Xứ" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="md-btnSubmit" data-dismiss="modal">Xác Nhận</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('document').ready(function () {
+        LoadData();
+    });
+
+    //$(document).on('click', "button[name = 'bupdate']", function () {
+    //    let idB = $(this).closest('tr').attr('id');
+
+    //    $.ajax({
+    //        url: "https://localhost:44346/api/BrandsApi/MaNhanHieu?=" + idB,
+    //        type: 'PUT',
+    //        dataType: 'json',
+    //        data: {
+    //        },
+    //            success: function (data) {
+
+    //            }
+    //        })
+
+
+    //});
+
+    $(document).on('click', "button[name = 'bdelete']", function () {
+        let idB = $(this).closest('tr').attr('id');
+
+        console.log("https://localhost:44346/api/BrandsApi/MaNhanHieu?=" + idB);
+        if (confirm("Ban that su muon xoa")) {
+            $.ajax({
+                url: "https://localhost:44346/api/BrandsApi/MaNhanHieu?=" + idB,
+                type: 'DELETE',
+                dataType: 'json',
+                success: function (dt) {
+
+                    $('#table').empty();
+
+                    var tbbrand = $('#table');
+                    $.ajax({
+                        type: 'GET',
+                        url: "https://localhost:44346/api/BrandsApi",
+
+                        dataType: 'json',
+                        success: function (data) {
+                            var st = `<tr>
+
+                                    <th class="col-sm-4 ">
+                                        Tên nhãn hiệu
+                                    </th>
+                                    <th class="col-sm-5">
+                                        Email
+                                    </th>
+                                    <th class="col-sm-1">
+                                        Xuất xứ
+                                    </th>
+                                    <th class="col-sm-2 ">
+                                        Action
+                                    </th>
+                                </tr>`
+                            tbbrand.append(st);
+                            $.each(data, function (index, val) {
+                                var str = '<tr id="' + val.MaNhanHieu + '"> < th scope="row">' + val.MaNhanHieu + '</th><th>' + val.TenNhanHieu + '</th><th>' + val.Email + '</th><th>' + val.XuatXu + '</th><th>';
+                                str += '<button id = "btnSua" class = "btn btn-xs btn-warning" name ="bupdate"><i class= "fa fa-pencil-sqare-o" >Sửa</i></button>';
+                                str += '<button id = "btnXoa" class = "btn btn-xs btn-danger" name = "bdelete"><i class= "fa fa-pencil-sqare-o" >Xóa</i></button></ th ></tr >';
+
+
+                                tbbrand.append(str);
+
+                            });
+                        }
+                    });
+                }
+            })
+        }
+
+    });
+
+
+    $('#btnThem').click(function () {
+        $('#modal-title').text('Thêm Nhãn Hiệu Mới');
+        $('#modalBrand').modal();
+    });
+    $('#md-btnSubmit').click(function () {
+        let TenNhanHieu = $('#mdtennhan').val().trim();
+        let Email = $('#md-email').val().trim();
+        let XuatXu = $('#md-xuatxu').val().trim();
+
+        if (TenNhanHieu.length == 0 || Email.length == 0 || XuatXu.length == 0) {
+            alert('Thông tin chưa đủ . Vui lòng nhập lại')
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: "https://localhost:44346/api/BrandsApi",
+                dataType: 'json',
+                data: {
+                    TenNhanHieu: TenNhanHieu,
+                    Email: Email,
+                    XuatXu: XuatXu
+                },
+                success: function (data) {
+                    var str = '<tr id="' + data.MaNhanHieu + '"> < th scope="row">' + data.MaNhanHieu + '</th><th>' + data.TenNhanHieu + '</th><th>' + data.Email + '</th><th>' + data.XuatXu + '</th><th>';
+                    str += '<button id = "btnSua" class = "btn btn-xs btn-warning" name ="bupdate"><i class= "fa fa-pencil-sqare-o" >Sửa</i></button>';
+                    str += '<button id = "btnXoa" class = "btn btn-xs btn-danger" name = "bdelete"><i class= "fa fa-pencil-sqare-o" >Xóa</i></button></ th ></tr >';
+
+
+                    $('#table').append(str);
+
+                }
+            })
+                ('#mdtennhan').val('');
+            ('#md-email').val('');
+            ('#md-xuatxu').val('');
+
+        }
+
+    });
+    function LoadData() {
+        var tbbrand = $('#table');
+        $.ajax({
+            type: 'GET',
+            url: "https://localhost:44346/api/BrandsApi",
+
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (index, val) {
+                    var str = '<tr id="' + val.MaNhanHieu + '"> < th scope="row">' + val.MaNhanHieu + '</th><th>' + val.TenNhanHieu + '</th><th>' + val.Email + '</th><th>' + val.XuatXu + '</th><th>';
+                    str += '<button id = "btnSua" class = "btn btn-xs btn-warning" name ="bupdate"><i class= "fa fa-pencil-sqare-o" >Sửa</i></button>';
+                    str += '<button id = "btnXoa" class = "btn btn-xs btn-danger" name = "bdelete"><i class= "fa fa-pencil-sqare-o" >Xóa</i></button></ th ></tr >';
+
+
+                    tbbrand.append(str);
+
+                });
+            }
+        });
+
+    }
+
+
+    $(document).on('click', "button[name = 'bupdate']", function () {
+        let idB = $(this).closest('tr').attr('id');
+        console.log("https://localhost:44346/api/BrandsApi/MaNhanHieu?=" + idB)
+
+        $.ajax({
+            url: "https://localhost:44346/api/BrandsApi/MaNhanHieu?=" + idB,
+            type: 'PUT',
+            dataType: 'json',
+            data: {
+                TenNhanHieu: TenNhanHieu,
+                Email: Email,
+                XuatXu: XuatXu
+            },
+            success: function (data) {
+
+
+                $('#mdtennhan').val(data.TenNhanHieu);
+                $('#md-email').val(data.Email);
+                $('#md-xuatxu').val(data.XuatXu);
+                $('#modalBrand').modal();
+
+
+            }
+        })
+    });
+</script>

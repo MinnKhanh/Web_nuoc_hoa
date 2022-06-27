@@ -1,0 +1,53 @@
+﻿@model BTL.Models.KHACHHANG
+
+@{
+    ViewBag.Title = "XoaKhachHang";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutShop.cshtml";
+}
+
+<h2 style="text-align: center">Xóa khách hàng</h2>
+
+<h3 style="text-align: center">Bạn có chắc muốn xóa khách hàng này không?</h3>
+<div>
+    <h4 style="text-align: center">Khách hàng xóa</h4>
+    <hr />
+    <div class="col-md-offset-4 col-md-10">
+        <dl class="dl-horizontal">
+            <dt>
+                Tên khách hàng:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TenKhachHang)
+            </dd>
+
+            <dt>
+                Địa chỉ:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DiaChi)
+            </dd>
+
+            <dt>
+                Số điện thoại:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DienThoai)
+            </dd>
+
+        </dl>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="col-md-offset-5 col-md-10">
+            <input type="submit" value="Xóa khách hàng" class="btn btn-default" />
+
+        </div>
+    }
+</div>
+

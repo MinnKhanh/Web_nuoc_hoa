@@ -1,0 +1,11 @@
+﻿@using BTL.Models;
+@model List<LOAI>
+
+@foreach (var item in Model)
+{
+    
+        <li>
+            @Html.ActionLink(item.TenLoai, "SanPhamTheoLoai", "SanPhamAdmin", new { MaLoai = item.MaLoai }, null)
+        </li>
+
+}

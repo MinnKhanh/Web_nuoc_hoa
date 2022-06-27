@@ -1,0 +1,74 @@
+﻿@model BTL.Models.SANPHAM
+@{
+    ViewBag.Title = "ChiTietSanPham";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutShop.cshtml";
+}
+
+<i style="text-align: center; color: #757575; font-family: italic; font-size: 25px; padding-bottom: 15px; margin-left:2%">Our Perfume</i>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+
+<!--Phần chi tiết mới-->
+<section class="single-product">
+    <div class="container">
+        <div class="row mt-20">
+            <div class="col-md-5">
+                <div class="single-product-slider">
+                    <div id='carousel-custom' class='carousel slide' data-ride='carousel'>
+                        <div class='carousel-outer'>
+                            <!-- me art lab slider -->
+                            <div class='carousel-inner '>
+                                <div class='item active'>
+                                    <img src='@Url.Content("~/Resource/SanPham/" + @Html.DisplayFor(model => model.AnhSanPham))' alt='' data-zoom-image="@Url.Content("~/Resource/SanPham/" + @Html.DisplayFor(model => model.AnhSanPham))" />
+                                </div>
+                                <div class='item'>
+                                    <img src='@Url.Content("~/Resource/SanPham/" + @Html.DisplayFor(model => model.AnhSanPham))' alt='' data-zoom-image="@Url.Content("~/Resource/SanPham/" + @Html.DisplayFor(model => model.AnhSanPham))" />
+                                </div>
+
+                                <div class='item'>
+                                    <img src='@Url.Content("~/Resource/SanPham/" + @Html.DisplayFor(model => model.AnhSanPham))' alt='' data-zoom-image="@Url.Content("~/Resource/SanPham/" + @Html.DisplayFor(model => model.AnhSanPham))" />
+                                </div>
+                                <div class='item'>
+                                    <img src='@Url.Content("~/Resource/SanPham/" + @Html.DisplayFor(model => model.AnhSanPham))' alt='' data-zoom-image="@Url.Content("~/Resource/SanPham/" + @Html.DisplayFor(model => model.AnhSanPham))" />
+                                </div>
+                                <div class='item'>
+                                    <img src='@Url.Content("~/Resource/SanPham/" + @Html.DisplayFor(model => model.AnhSanPham))' alt='' data-zoom-image="@Url.Content("~/Resource/SanPham/" + @Html.DisplayFor(model => model.AnhSanPham))" />
+                                </div>
+                                <div class='item'>
+                                    <img src='@Url.Content("~/Resource/SanPham/" + @Html.DisplayFor(model => model.AnhSanPham))' alt='' data-zoom-image="@Url.Content("~/Resource/SanPham/" + @Html.DisplayFor(model => model.AnhSanPham))" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="single-product-details">
+                    <h2>Nước hoa: @Html.DisplayFor(model => model.TenSP)</h2>
+                    <br/>
+                    <p class="product-price"> Dung tích:@Html.DisplayFor(model => model.DungTich) ml</p>
+                    <br/>
+                    <p class="product-description mt-20">
+                        Giá: @Html.DisplayFor(model => model.DonGia) VNĐ
+                    </p>
+                    <br/>
+                    <p>Mô tả: @Html.DisplayFor(model => model.MoTaSanPham)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="footer" style="text-align: center">
+    @Html.ActionLink("Thêm sản phẩm", "Add", "SanPhamAdmin")|
+    @Html.ActionLink("Chỉnh sửa sản phẩm", "Update", new { @MaSp = Model.MaSP }) |
+    @Html.ActionLink("Xóa sản phẩm", "XoaSanPham", new { @MaSP = Model.MaSP })
+</div>
+
+
+
+
+

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<BTL.Models.CT_HOADONBAN>
+
+@{
+    ViewBag.Title = "QuanLyHoaDon";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutShop.cshtml";
+}
+
+<div class="container">
+    <h2>Hóa đơn mua hàng của bạn</h2>
+
+    <table class="table">
+        <tr>
+            <th>
+                Số lượng
+            </th>
+            <th>
+                Giá sản phẩm / 1 chai
+            </th>
+            <th>
+                Thành tiền (VNĐ)
+            </th>
+            <th>
+                Tên nước hoa
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.SoLuongBan
+                </td>
+                <td>
+                    @item.DonGiaBan
+                </td>
+                <td>
+                    @item.ThanhTienBan
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SANPHAM.TenSP)
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>

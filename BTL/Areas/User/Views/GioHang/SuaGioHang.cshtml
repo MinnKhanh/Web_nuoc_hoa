@@ -1,0 +1,174 @@
+﻿@using Web_BTL.Areas.User.Models
+@model List<GioHang>
+@{
+    ViewBag.Title = "SuaGioHang";
+    Layout = "~/Areas/User/Views/Shared/_LayoutShop.cshtml";
+}
+
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Mã sản phẩm</td>
+            <td>Tên sản phẩm</td>
+            <td>Ảnh</td>
+            <td>Số lượng</td>
+            <td>Đơn giá</td>
+            <td>Thành tiền</td>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="cartdetail_@item.sMaSP">
+                <td>@item.sMaSP</td>
+                <td>@item.sTenSP</td>
+                <td><img src="@Url.Content("~/Resource/SanPham/"+@item.sAnhSP)" width="100px" height="100px" /> </td>
+                @*@using (Html.BeginForm("CapNhatGioHang", "GioHang", new { sMaSP = item.sMaSP }))
+        {
+            <td>
+                @Html.TextBox("txtSoLuong", item.iSoLuong)
+                &nbsp;
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                <a href='@Url.Action("XoaGioHang", "GioHang", new { sMaSP = item.sMaSP })' class="btn btn-primary">Xóa</a>
+            </td>
+        }*@
+                <td>
+                    <input type="hidden" value="@item.soluongton" class="soluongton" />
+                    <input type="number" value="@item.iSoLuong" class="inputsoluongsp" />
+                    <button type="button" class="btn btn-primary butsua" data-id="@item.sMaSP">Cập nhật</button>
+                    <button type="button" class="btn btn-primary butxoa" data-id="@item.sMaSP">Xóa</button>
+                </td>
+                <td id="gia_@item.sMaSP">@item.dGia</td>
+                <td id="thanhtien_@item.sMaSP">@item.dThanhTien</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <td></td>
+            <td>Tổng cộng</td>
+            <td></td>
+            <td id="Tongsl">@ViewBag.TongSoLuong</td>
+            <td></td>
+            <td id="tongtien">@ViewBag.TongTien</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                @if (ViewBag.TongSoLuong != 0)
+                {
+                <td><a href='@Url.Action("GioHang", "GioHang")' id="muahang" class="btn btn-primary">Mua hàng</a></td>
+            }
+                </td>
+            </tr>
+        </tfoot>
+
+    </table>
+</div>
+<script>
+
+    $(".inputsoluongsp").change(function (e) {
+        console.log(typeof e.target.previousElementSibling.value)
+        if (parseInt(e.target.value) > parseInt(e.target.previousElementSibling.value)) {
+            alert("Bạn Đã Mua quá số lượng còn trong kho,trong kho chỉ còn " + e.target.previousElementSibling.value+" sản phẩm")
+            e.target.value = e.target.previousElementSibling.value;
+        }
+    });
+    $(".butsua").click(function (e) {
+        let masp = e.target.getAttribute("data-id")
+        let sl = parseInt(e.target.previousElementSibling.value)
+        console.log(masp)
+        let urlGetPhanloai = "https://localhost:44346/User/GioHang/CapNhatGioHang?sMaSP=" + masp + "&soluongcapnhat=" + e.target.previousElementSibling.value;
+        $.ajax({
+            url: urlGetPhanloai,
+            method: 'GET',
+            success: function (response) {
+                console.log(response)
+                let id = "#gia_" + masp
+                let gia = parseInt($(id).text())
+                let idtien = "#thanhtien_" + masp
+                let thanhtien = gia * sl
+                $(idtien).text(thanhtien.toString())
+                let urltien = "https://localhost:44346/User/GioHang/TongTien";
+                $.ajax({
+                    url: urltien,
+                    method: 'GET',
+                    success: function (response) {
+                        console.log(response)
+                        $("#tongtien").text(response.toString())
+                    },
+                    error: function (response) {
+                    }
+                })
+                let urlsl = "https://localhost:44346/User/GioHang/TongSoLuong";
+                $.ajax({
+                    url: urlsl,
+                    method: 'GET',
+                    success: function (response) {
+                        console.log(response)
+                        $("#Tongsl").text(response.toString())
+                    },
+                    error: function (response) {
+                    }
+                })
+            },
+            error: function (response) {
+            }
+
+        });
+    })
+    $(".butxoa").click(function (e) {
+        let masp = e.target.getAttribute("data-id")
+        console.log(masp)
+        let cartid = "#cartdetail_" + masp
+        console.log(cartid)
+        $(cartid).remove();
+        let urlGetPhanloai = "https://localhost:44346/User/GioHang/XoaGioHang?sMaSP=" + masp;
+        $.ajax({
+            url: urlGetPhanloai,
+            method: 'GET',
+            success: function (response) {
+                console.log(response)
+                let urltien = "https://localhost:44346/User/GioHang/TongTien";
+                $.ajax({
+                    url: urltien,
+                    method: 'GET',
+                    success: function (response) {
+                        console.log(response)
+                        $("#tongtien").text(response.toString())
+                    },
+                    error: function (response) {
+                    }
+                })
+                let urlsl = "https://localhost:44346/User/GioHang/TongSoLuong";
+                $.ajax({
+                    url: urlsl,
+                    method: 'GET',
+                    success: function (response) {
+                        console.log(response)
+                        $("#Tongsl").text(response.toString())
+                        let tongsl = $("#Tongsl").text();
+
+                        if (parseInt(response) == 0) {
+                            console.log("vao day roi")
+                            $("#muahang").hide();
+                        }
+                    },
+                    error: function (response) {
+                    }
+                })
+               
+            },
+            error: function (response) {
+            }
+
+        });
+    })
+</script>
+
+
